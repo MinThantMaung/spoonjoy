@@ -1,12 +1,10 @@
-import { Button } from "@/components/ui/button";
-
-
+import Nav from "@/app/components/_nav/page"
 export default function Home() {
   return (
     <>
-    <div>
-      
-    </div>
+      <nav>
+        <Nav />
+      </nav>
     </>
   );
 }
