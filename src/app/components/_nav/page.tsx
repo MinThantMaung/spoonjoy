@@ -15,7 +15,7 @@ const Nav = () => {
                     <li key={label}>
                         <Link
                             href={href}
-                            className={`cursor-pointer transition duration-200 hover:text-blue-500 underline ${
+                            className={`cursor-pointer transition duration-200 hover:text-blue-500 hover:underline ${
                                 pathname === href ? 'font-bold text-blue-600' : ''
                             }`}
                             >
