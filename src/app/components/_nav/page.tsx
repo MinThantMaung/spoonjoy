@@ -4,7 +4,7 @@ import { navItems } from '../../../../utils/routes'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
-const page = () => {
+const Nav = () => {
     const pathname = usePathname()
   return (
     <>
@@ -29,4 +29,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Nav
