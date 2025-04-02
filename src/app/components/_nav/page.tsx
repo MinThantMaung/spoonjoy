@@ -9,17 +9,17 @@ const Nav = () => {
   return (
     <>
         <div className='flex justify-between items-center'>
-            <h1 className='p-4 font-bold'>Spoonjoy</h1>
+            <h1 className='text-2xl p-5 font-bold'>Spoonjoy</h1>
             <ul className='hidden sm:flex sm:space-x-5 sm:mr-5'>
                 {navItems.map(({label,href}) => (
                     <li key={label}>
                         <Link
                             href={href}
-                            className={`cursor-pointer transition duration-200 hover:text-blue-500 hover:underline ${
-                                pathname === href ? 'font-bold text-blue-600' : ''
+                            className={`cursor-pointer transition duration-200 hover:text-green-500 hover:underline text-lg ${
+                                pathname === href ? 'font-bold text-green-500' : ''
                             }`}
                             >
-                        {label}
+                            {label}
                         </Link>
                     </li>
                 ))}
