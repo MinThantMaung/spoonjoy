@@ -10,7 +10,7 @@ type SearchBarProps = {
 
 export default function SearchBar({
   placeholder = "Search by location...",
-  buttonLabel = "Search now",
+  buttonLabel = "Search",
   onSearch,
 }: SearchBarProps) {
   const [query, setQuery] = useState("")
