@@ -15,18 +15,18 @@ export default function Home() {
     <section className="flex w-full">
       <div className="flex flex-col items-center justify-center text-center space-y-3 px-4 py-12 mx-auto">
           {/* Heading */}
-        <div className="flex items-center gap-x-4 flex-wrap justify-center">
+        <header className="flex items-center gap-x-4 flex-wrap justify-center">
           <span className="text-5xl font-extrabold">Explore recipes</span>
-          <Image src={think} alt="thinking" width={100} height={100}/>
+          <Image src={think} alt="Illustration of a person thinking about food" width={100} height={100}/>
           <span className="text-5xl font-extrabold">like a chef</span>
-        </div>
+        </header>
 
         {/* Subheading */}
-        <div className="flex items-center gap-x-4 flex-wrap justify-center">
+        <header className="flex items-center gap-x-4 flex-wrap justify-center">
           <span className="text-4xl font-semibold">Cook confidently</span>
-          <Image src={cooking} alt="cooking" width={100} height={100}/>
+          <Image src={cooking} alt="Illustration of someone cooking" width={100} height={100}/>
           <span className="text-4xl font-semibold">every day</span>
-        </div>
+        </header>
 
         {/* Description */}
         <div className="text-gray-600 text-lg">
@@ -42,7 +42,8 @@ export default function Home() {
          {/* Country */}
         <div className="text-gray-600 mt-6 mb-12">
         <p>
-          For a complete list of searchable countries, <Link href='country' className="text-blue-600 underline cursor-pointer">click here</Link>.
+          For a complete list of searchable countries, <Link href='country' aria-label="View complete list of countries" 
+          className="text-blue-600 underline cursor-pointer">click here</Link>.
         </p>
         </div>
       </div>
