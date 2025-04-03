@@ -47,10 +47,9 @@ export default function Home() {
 
           {/* Country */}
           <div className="text-gray-600 mt-6 mb-12">
-          <p>
-            For a complete list of searchable countries, <Link href='country' aria-label="View complete list of countries" 
-            className="text-blue-600 underline cursor-pointer">click here</Link>.
-          </p>
+          <Link href="country" aria-label="View complete list of countries" className="text-blue-600 underline cursor-pointer">
+              Explore our full list of countries
+          </Link>
           </div>
         </div>
       </section>
