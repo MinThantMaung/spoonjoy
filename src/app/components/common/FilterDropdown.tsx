@@ -1,56 +1,77 @@
-import React from 'react'
-import { cn } from "@/lib/utils"
+import React from "react";
+import { cn } from "@/lib/utils";
 import {
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 
 type Props<T> = {
-    label: string;
-    items: T[];
-    getTitle: (item: T) => string;
-    getHref: (item: T) => string;
-  };
-  
-  export function FilterDropdown<T>({ label, items, getTitle, getHref }: Props<T>) {
-    return (
-      <NavigationMenuItem>
-        <NavigationMenuTrigger>{label}</NavigationMenuTrigger>
-        <NavigationMenuContent className="rounded-xl shadow-lg bg-white">
-          <ul className="grid gap-4 p-4 w-[300px] sm:w-[600px] sm:grid-cols-5 grid-cols-3">
-            {items.map((item) => (
-              <ListItem key={getTitle(item)} title={getTitle(item)} href={getHref(item)} />
-            ))}
-          </ul>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-    );
+  label: string;
+  items: T[];
+  getTitle: (item: T) => string;
+  onSelect?: (item: T) => void;
+  selected?: T | null;
+};
+
+export function FilterDropdown<T>({
+  label,
+  items,
+  getTitle,
+  onSelect,
+  selected,
+}: Props<T>) {
+  return (
+    <NavigationMenuItem>
+      <NavigationMenuTrigger>{label}</NavigationMenuTrigger>
+      <NavigationMenuContent className="rounded-xl shadow-lg bg-white">
+        <ul className="grid gap-4 p-2 w-[300px] sm:w-[600px] sm:grid-cols-5 grid-cols-3">
+          {items.map((item) => {
+            const isActive =
+              selected !== null &&
+              selected !== undefined &&
+              getTitle(item) === getTitle(selected);
+            return (
+              <ListItem
+                key={getTitle(item)}
+                title={getTitle(item)}
+                onClick={() => onSelect?.(item)}
+                isActive={isActive}
+              />
+            );
+          })}
+        </ul>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  );
+}
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"button">,
+  {
+    title: string;
+    onClick?: () => void;
+    className?: string;
+    isActive?: boolean;
   }
-  
-  const ListItem = React.forwardRef<
-    React.ElementRef<"a">,
-    React.ComponentPropsWithoutRef<"a">
-  >(({ className, title, children, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <a
-            ref={ref}
-            className={cn(
-              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-              className
-            )}
-            {...props}
-          >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-              {children}
-            </p>
-          </a>
-        </NavigationMenuLink>
-      </li>
-    )
-  })
-  ListItem.displayName = "ListItem"
+>(({ title, onClick, className, isActive }, ref) => {
+  return (
+    <li>
+      <button
+        ref={ref}
+        onClick={onClick}
+        className={cn(
+          "w-full text-left block select-none space-y-1 rounded-sm p-2 leading-none outline-none transition-colors",
+          isActive
+            ? "bg-green-400 text-white font-semibold ring-1 ring-accent"
+            : "hover:bg-green-400 hover:text-white",
+          className
+        )}
+      >
+        <div className="text-sm font-medium leading-none">{title}</div>
+      </button>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";
