@@ -19,7 +19,7 @@ const MenuCard = ({ title, image }: Props) => (
       <CardHeader className="pb-0">
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle className="text-xl font-bold tracking-tight h-8 sm:h-14">{title}</CardTitle>
+            <CardTitle className="text-xl font-bold tracking-tight h-8 sm:h-14 line-clamp-2">{title}</CardTitle>
           </div>
         </div>
       </CardHeader>
