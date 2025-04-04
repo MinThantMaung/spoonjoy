@@ -17,8 +17,8 @@ export default function MenuPage() {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedArea, setSelectedArea] = useState<Area | null>(null);
   const { data: meals = [],isLoading: isMealsLoading,isError: isMealsError,} = useMealsByCategory(selectedCategory?.strCategory || "Dessert");
-  const { data: areas = [],isLoading: isAreasLoading,isError: isAreasError } = useFindByArea();
-  const { data: categories = [],isLoading: isCategoriesLoading,isError: isCategoriesError } = useFindByCategories();
+  const { data: areas = [],isLoading: isAreasLoading } = useFindByArea();
+  const { data: categories = [],isLoading: isCategoriesLoading } = useFindByCategories();
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function MenuPage() {
                   items={areas}
                   getTitle={(a) => a.strArea}
                   selected={selectedArea}
-                  onSelect={(a) => console.log(a.strArea)} // not used now
+                  onSelect={(a) => setSelectedArea(a)} 
                 />
               )}
           {isCategoriesLoading ? (
