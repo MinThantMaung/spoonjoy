@@ -1,11 +1,18 @@
 import { useQuery } from "@tanstack/react-query"
-import { fetchAllArea, fetchAllCategories, fetchMealsByCategory } from "../services/mealServices"
+import { fetchAllArea, fetchAllCategories, fetchMealsByArea, fetchMealsByCategory } from "../services/mealServices"
 
 export const useMealsByCategory = (category: string) => {
     return useQuery({
       queryKey: ["meals", category],
       queryFn: () => fetchMealsByCategory(category).then(res => res.data.meals),
     });
+};
+
+export const useMealsByArea = (area: string) => {
+  return useQuery({
+    queryKey: ["mealbyarea", area],
+    queryFn: () => fetchMealsByArea(area).then(res => res.data.meals),
+  });
 };
 
 export const useFindByArea = () => {
