@@ -7,39 +7,65 @@ import {
   NavigationMenu,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import { Skeleton } from "@/components/ui/skeleton"
+import Loading from "@/app/components/ui/Loading";
+import ErrorMessage from "@/app/components/ui/ErrorMessage";
+import EmptyState from "@/app/components/ui/EmptyState";
+import { useState } from "react";
 
 export default function MenuPage() {
-  const { data: meals = [] } = useMealsByCategory("Dessert");
-  const { data: areas = [] } = useFindByArea();
-  const { data: categories = [] } = useFindByCategories();
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedArea, setSelectedArea] = useState<Area | null>(null);
+  const { data: meals = [],isLoading: isMealsLoading,isError: isMealsError,} = useMealsByCategory(selectedCategory?.strCategory || "Dessert");
+  const { data: areas = [],isLoading: isAreasLoading,isError: isAreasError } = useFindByArea();
+  const { data: categories = [],isLoading: isCategoriesLoading,isError: isCategoriesError } = useFindByCategories();
 
   return (
     <>
       <NavigationMenu className="my-4 mx-6">
         <NavigationMenuList>
-          <FilterDropdown<Area>
-            label="Area"
-            items={areas}
-            getTitle={(a) => a.strArea}
-            getHref={(a) => `/area/${encodeURIComponent(a.strArea)}`}
-          />
-          <FilterDropdown<Category>
-            label="Category"
-            items={categories}
-            getTitle={(c) => c.strCategory}
-            getHref={(c) => `/category/${encodeURIComponent(c.strCategory)}`}
-          />
+          {isAreasLoading ? (
+             <Skeleton className="h-8 w-[75px] rounded-sm bg-white" />
+              ) : (
+                <FilterDropdown<Area>
+                  label="Area"
+                  items={areas}
+                  getTitle={(a) => a.strArea}
+                  selected={selectedArea}
+                  onSelect={(a) => console.log(a.strArea)} // not used now
+                />
+              )}
+          {isCategoriesLoading ? (
+            <Skeleton className="h-8 w-[100px] rounded-sm bg-white" />
+              ) : (
+                <FilterDropdown<Category>
+                  label="Category"
+                  items={categories}
+                  getTitle={(c) => c.strCategory}
+                  selected={selectedCategory}
+                  onSelect={(c) => setSelectedCategory(c)} // ✅ set full object
+                />
+              )}
         </NavigationMenuList>
       </NavigationMenu>
 
       <div className="mx-6 my-6 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-        {meals.slice(0, 10).map((meal : Meal) => (
-          <MenuCard
-            key={meal.idMeal}
-            title={meal.strMeal}
-            image={meal.strMealThumb}
-          />
+        {isMealsLoading &&
+          Array.from({ length: 10 }).map((_, idx) => (
+            <Loading key={idx} />
         ))}
+        {isMealsError && <ErrorMessage />}
+        {!isMealsLoading && (!meals || meals.length === 0) && (
+          <EmptyState />
+        )}
+        {!isMealsLoading && meals?.length > 0 &&
+          meals.slice(0, 10).map((meal: Meal) => (
+            <MenuCard
+              key={meal.idMeal}
+              title={meal.strMeal}
+              image={meal.strMealThumb}
+            />
+          ))}
       </div>
     </>
   );
