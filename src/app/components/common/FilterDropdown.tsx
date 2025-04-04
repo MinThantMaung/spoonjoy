@@ -10,7 +10,7 @@ type Props<T> = {
   label: string;
   items: T[];
   getTitle: (item: T) => string;
-  onSelect?: (item: T) => void;
+  onSelect?: (item: T | null) => void;
   selected?: T | null;
 };
 
@@ -26,20 +26,25 @@ export function FilterDropdown<T>({
       <NavigationMenuTrigger>{label}</NavigationMenuTrigger>
       <NavigationMenuContent className="rounded-xl shadow-lg bg-white">
         <ul className="grid gap-4 p-2 w-[300px] sm:w-[600px] sm:grid-cols-5 grid-cols-3">
-          {items.map((item) => {
-            const isActive =
-              selected !== null &&
-              selected !== undefined &&
-              getTitle(item) === getTitle(selected);
-            return (
-              <ListItem
-                key={getTitle(item)}
-                title={getTitle(item)}
-                onClick={() => onSelect?.(item)}
-                isActive={isActive}
-              />
-            );
-          })}
+        {items.map((item) => {
+          const isActive =
+            selected !== null &&
+            selected !== undefined &&
+            getTitle(item) === getTitle(selected);
+
+          return (
+            <ListItem
+              key={getTitle(item)}
+              title={getTitle(item)}
+              onClick={() => {
+                const isAlreadySelected =
+                  selected && getTitle(item) === getTitle(selected);
+                onSelect?.(isAlreadySelected ? null : item);
+              }}
+              isActive={isActive}
+            />
+          );
+        })}
         </ul>
       </NavigationMenuContent>
     </NavigationMenuItem>
@@ -73,4 +78,3 @@ const ListItem = React.forwardRef<
     </li>
   );
 });
-ListItem.displayName = "ListItem";
