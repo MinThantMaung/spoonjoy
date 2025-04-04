@@ -1,153 +1,46 @@
-"use client"
-import React from 'react'
-import MenuCard from '../../components/ui/MenuCard'
-import Link from "next/link"
- 
-import { cn } from "@/lib/utils"
+"use client";
+import { useMealsByCategory, useFindByArea, useFindByCategories } from "../../../../hooks/useMeals";
+import { FilterDropdown } from "../../components/common/FilterDropdown";
+import MenuCard from "../../components/ui/MenuCard";
+import { Area, Category, Meal } from "../../../../types/meal"
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
-import { useMeals } from '../../../../hooks/useMeals'
+} from "@/components/ui/navigation-menu";
 
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-]
+export default function MenuPage() {
+  const { data: meals = [] } = useMealsByCategory("Dessert");
+  const { data: areas = [] } = useFindByArea();
+  const { data: categories = [] } = useFindByCategories();
 
-const Menu = () => {
-  const {useGetAllFoods} = useMeals();
-  const {data: foods, isLoading, isError, isSuccess} = useGetAllFoods()
-  console.log(foods);
   return (
     <>
-      <NavigationMenu className='ml-10 mt-8 mb-4'>
+      <NavigationMenu className="my-4 mx-6">
         <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className='bg-transparent'>Area</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                {components.map((component) => (
-                  <ListItem
-                    key={component.title}
-                    title={component.title}
-                    href={component.href}
-                  >
-                    {component.description}
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className='bg-transparent'>Ingredients</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                {components.map((component) => (
-                  <ListItem
-                    key={component.title}
-                    title={component.title}
-                    href={component.href}
-                  >
-                    {component.description}
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className='bg-transparent'>Categories</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                {components.map((component) => (
-                  <ListItem
-                    key={component.title}
-                    title={component.title}
-                    href={component.href}
-                  >
-                    {component.description}
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
+          <FilterDropdown<Area>
+            label="Area"
+            items={areas}
+            getTitle={(a) => a.strArea}
+            getHref={(a) => `/area/${encodeURIComponent(a.strArea)}`}
+          />
+          <FilterDropdown<Category>
+            label="Category"
+            items={categories}
+            getTitle={(c) => c.strCategory}
+            getHref={(c) => `/category/${encodeURIComponent(c.strCategory)}`}
+          />
         </NavigationMenuList>
       </NavigationMenu>
+
       <div className="mx-6 my-6 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-        {/* {menuItems.map((item, idx) => (
+        {meals.slice(0, 10).map((meal : Meal) => (
           <MenuCard
-            key={idx}
-            title={item.title}
-            description={item.description}
-            image={item.image}
+            key={meal.idMeal}
+            title={meal.strMeal}
+            image={meal.strMealThumb}
           />
-        ))} */}
+        ))}
       </div>
     </>
-  )
+  );
 }
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
-
-export default Menu
