@@ -19,7 +19,7 @@ export default function Home() {
         <meta name="description" content="Explore delicious recipes crafted by chefs and cook confidently every day." />
       </Head>
       <section className="flex w-full">
-        <div className="flex flex-col items-center justify-center text-center space-y-3 px-3 sm:px-4 py-12 mx-auto">
+        <div className="flex flex-col items-center justify-center text-center space-y-3 px-3 sm:px-4 py-20 mx-auto">
             {/* Heading */}
           <header className="sm:flex items-center sm:gap-x-4 flex-wrap justify-center">
             <span className="text-4xl sm:text-5xl font-extrabold">Explore recipes</span>
