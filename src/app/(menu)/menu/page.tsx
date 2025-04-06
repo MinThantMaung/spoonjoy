@@ -18,6 +18,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "@/app/components/ui/Loading";
 import ErrorMessage from "@/app/components/ui/ErrorMessage";
 import EmptyState from "@/app/components/ui/EmptyState";
+import PaginationComponent from "@/app/components/common/pagination";
 
 export default function MenuPage() {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -103,6 +104,9 @@ export default function MenuPage() {
               image={meal.strMealThumb}
             />
           ))}
+      </div>
+      <div className="py-6">
+        <PaginationComponent />
       </div>
     </>
   );
