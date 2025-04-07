@@ -7,7 +7,6 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { useRouter } from 'next/navigation';
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMemo } from 'react';
-// @ts-ignore
 import debounce from 'lodash/debounce';
 import Image from 'next/image';
 import notFound from '../../../public/Anxiety-pana.svg'
@@ -15,14 +14,14 @@ import notFound from '../../../public/Anxiety-pana.svg'
 const DEBOUNCE_DELAY = 300;
 const Country = () => {
   const router = useRouter();
-  const [searchInput, setSearchInput] = useState(""); // what user types
   const [search, setSearch] = useState(""); // debounced search
   const { data: areaData = [], isLoading: isAreasLoading } = useFindByArea();
 
-  const debouncedSearch = useCallback(
-    debounce((value: string) => {
-      setSearch(value);
-    }, DEBOUNCE_DELAY),
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setSearch(value);
+      }, DEBOUNCE_DELAY),
     []
   );
 
@@ -33,7 +32,6 @@ const Country = () => {
   }, [debouncedSearch]);
 
   const handleSearch = (query: string) => {
-    setSearchInput(query);
     debouncedSearch(query);
   };
 
