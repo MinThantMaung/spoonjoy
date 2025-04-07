@@ -27,7 +27,7 @@ const Page = () => {
   return (
     <>
       <h1 className='ml-6 my-6 text-xl font-bold'>
-        {area}'s MealList
+        {area}&apos; MealList
       </h1>
       {/* Meals Grid */}
       <div className="mx-6 my-4 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
