@@ -77,19 +77,18 @@ const Country = () => {
                 </div>
               );
             })}
-            <div className='flex flex-col justify-center items-center py-10'>
+            <div className='flex flex-col justify-center items-center'>
               {filtered.length === 0 && !isAreasLoading && (
-                <>
+                <div className='py-10'>
                   <Image src={notFound} alt='no-data' width={100} height={100}/>
                   <div className="px-4 py-3 text-center text-sm text-gray-500">
                     No country found!
                   </div>
-                </>
+                </div>
               )}
             </div>
           </>
         )}
-        
       </ScrollArea>
     </>
   )
