@@ -6,12 +6,13 @@ import cooking from "../../../public/Cooking-bro.svg";
 import SearchBar from "../components/ui/SearchBar";
 import Link from "next/link";
 import Head from 'next/head';
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const handleSearch = (query: string) => {
-    console.log("Searching for:", query);
+    router.push(`/country/${encodeURIComponent(query)}`);
   };
-
   return (
     <>
       <Head>
