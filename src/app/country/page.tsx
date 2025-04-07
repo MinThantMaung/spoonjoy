@@ -1,5 +1,5 @@
 'use client'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchBar from '../components/ui/SearchBar';
 import { Area } from '../../../types/meal';
 import { useFindByArea } from '../../../hooks/useMeals';
