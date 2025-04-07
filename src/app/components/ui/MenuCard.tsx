@@ -31,6 +31,7 @@ const MenuCard = ({ title, image }: Props) => (
             alt={title}
             width={100}
             height={100}
+            loading="lazy"
             className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
             priority
           />
