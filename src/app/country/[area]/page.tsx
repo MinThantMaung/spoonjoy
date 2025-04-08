@@ -44,6 +44,7 @@ const Page = () => {
                 key={meal.idMeal}
                 title={meal.strMeal}
                 image={meal.strMealThumb}
+                id={meal.idMeal}
               />
             ))}
         </div>
