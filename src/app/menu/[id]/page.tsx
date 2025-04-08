@@ -1,15 +1,18 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { useGetMealById } from "../../../../hooks/useMeals";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { UtensilsCrossed, Globe } from "lucide-react";
+import { UtensilsCrossed, Globe, ArrowLeft} from "lucide-react";
+import DetailLoading from "@/app/components/ui/DetailLoading";
+import ErrorMessage from "@/app/components/ui/ErrorMessage";
 
 const Page = () => {
   const parems = useParams();
   const id = typeof parems.id === "string" ? parems.id : "";
+  const router = useRouter();
 
   const { data: mealData, isLoading, isError, isSuccess } = useGetMealById(id);
   const meal = mealData?.[0];
@@ -23,10 +26,23 @@ const Page = () => {
     }
   }
 
+  const handleBackToMenu = () =>{
+    router.push("/menu")
+  }
+
   return (
     <>
+      {isError && <ErrorMessage />}
+      {isLoading && (
+        <div className="min-h-screen flex justify-center items-center">
+          <DetailLoading />
+        </div>
+      )}
       {isSuccess && (
         <div className="flex flex-col">
+          <div className="flex justify-start items-center mt-6 ml-6" onClick={handleBackToMenu}>
+            <Button variant="link" className="hover:cursor-pointer"><ArrowLeft /> Back to menu</Button>
+          </div>
           <div className="flex flex-col lg:flex-row gap-8 mt-10 ml-20 mr-20">
             <div className="relative w-full lg:w-1/2 aspect-video rounded-xl shadow-lg overflow-hidden">
               <Image
@@ -84,7 +100,7 @@ const Page = () => {
           </div>
           {/* Instructions */}
           <div className="flex flex-col justify-center items-center my-8">
-            <div className="sm:max-w-5xl ml-4 mr-4 sm:ml-0 sm:mr-0">
+            <div className="max-w-5xl ml-4 mr-4 sm:ml-0 sm:mr-0">
               <h2 className="text-xl font-semibold mt-6 mb-3">Instructions</h2>
               <div className="bg-white text-black p-6 rounded-xl shadow border border-zinc-200 leading-relaxed whitespace-pre-line">
                 {meal.strInstructions}
