@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { fetchAllArea, fetchAllCategories, fetchMealsByArea, fetchMealsByCategory } from "../services/mealServices"
+import { fetchAllArea, fetchAllCategories, fetchMealsByArea, fetchMealsByCategory, fetchMealsById } from "../services/mealServices"
 
 export const useMealsByCategory = (category: string) => {
     return useQuery({
@@ -28,3 +28,10 @@ export const useFindByCategories = () => {
       queryFn: () => fetchAllCategories().then(res => res.data.meals),
     });
 };
+
+export const useGetMealById = (id : string) => {
+    return useQuery({
+      queryKey: ["meal",id],
+      queryFn: () => fetchMealsById(id).then(res => res.data.meals)
+    })
+}
