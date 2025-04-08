@@ -19,8 +19,10 @@ import Loading from "@/app/components/ui/Loading";
 import ErrorMessage from "@/app/components/ui/ErrorMessage";
 import EmptyState from "@/app/components/ui/EmptyState";
 import PaginationComponent from "@/app/components/common/FilterPagination";
+import { useRouter } from "next/navigation";
 
 export default function MenuPage() {
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedArea, setSelectedArea] = useState<Area | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -65,6 +67,10 @@ export default function MenuPage() {
   const startIndex = (currentPage - 1) * mealsPerPage;
   const endIndex = startIndex + mealsPerPage;
   const currentMeals = mealsToShow.slice(startIndex, endIndex);
+
+  const handleCardClick = (id: string) => {
+    router.push(`/menu/${id}`);
+  };
 
   return (
     <>
@@ -111,6 +117,8 @@ export default function MenuPage() {
                 key={meal.idMeal}
                 title={meal.strMeal}
                 image={meal.strMealThumb}
+                id= {meal.idMeal}
+                onClick={handleCardClick}
               />
             ))}
         </div>
