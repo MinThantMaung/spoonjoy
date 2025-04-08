@@ -15,3 +15,7 @@ export const fetchAllArea = () => {
 export const fetchAllCategories = () => {
     return axiosInstance.get(`list.php?c=list`);
 };
+
+export const fetchMealsById = (id : string) => {
+    return axiosInstance.get(`lookup.php?i=${id}`)
+}
