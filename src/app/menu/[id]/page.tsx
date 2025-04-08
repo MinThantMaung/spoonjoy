@@ -36,7 +36,7 @@ const Page = () => {
                 className="object-cover"
               />
             </div>
-            <div className="w-full lg:w-1/2 flex flex-col space-y-4 ml-6">
+            <div className="w-full lg:w-1/2 flex flex-col space-y-4 sm:ml-6">
               <h1 className="text-3xl font-bold">{meal.strMeal}</h1>
 
               {/* Badges */}
@@ -84,7 +84,7 @@ const Page = () => {
           </div>
           {/* Instructions */}
           <div className="flex flex-col justify-center items-center my-8">
-            <div className="max-w-5xl">
+            <div className="sm:max-w-5xl ml-4 mr-4 sm:ml-0 sm:mr-0">
               <h2 className="text-xl font-semibold mt-6 mb-3">Instructions</h2>
               <div className="bg-white text-black p-6 rounded-xl shadow border border-zinc-200 leading-relaxed whitespace-pre-line">
                 {meal.strInstructions}
