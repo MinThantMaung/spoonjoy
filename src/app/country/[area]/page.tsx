@@ -1,5 +1,5 @@
 'use client'
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useMemo, useState } from 'react'
 import { useMealsByArea } from '../../../../hooks/useMeals';
 import Loading from "@/app/components/ui/Loading";
@@ -10,6 +10,7 @@ import MenuCard from '@/app/components/ui/MenuCard';
 import PaginationComponent from '@/app/components/common/FilterPagination';
 
 const Page = () => {
+    const router = useRouter();
     const params = useParams();
     const area = useMemo(() => params.area?.toString() ?? "", [params]);
     const {
@@ -24,6 +25,10 @@ const Page = () => {
     const startIndex = (currentPage - 1) * mealsPerPage;
     const endIndex = startIndex + mealsPerPage;
     const currentMeals = mealsByArea?.slice(startIndex, endIndex) || [];
+
+    const handleCardClick = (id: string) => {
+      router.push(`/menu/${id}`);
+    };
   return (
     <>
       <h1 className='ml-6 my-6 text-xl font-bold'>
@@ -45,6 +50,7 @@ const Page = () => {
                 title={meal.strMeal}
                 image={meal.strMealThumb}
                 id={meal.idMeal}
+                onClick={handleCardClick}
               />
             ))}
         </div>
