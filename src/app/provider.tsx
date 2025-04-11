@@ -20,12 +20,14 @@ const Providers = ({ children }: PropsWithChildren<object>) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {!hideNav && (
-        <nav>
-          <Nav />
-        </nav>
-      )}
-      <div>{children}</div>
+      <div className="flex flex-col min-h-screen">
+        {!hideNav && (
+          <nav>
+            <Nav />
+          </nav>
+        )}
+        <div className="flex-1 flex">{children}</div>
+      </div>
     </QueryClientProvider>
   );
 };
