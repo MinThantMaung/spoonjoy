@@ -44,7 +44,7 @@ const Page = () => {
         </div>
       )}
       {isSuccess && (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <div className="flex justify-start items-center mt-6 ml-6" onClick={handleBackToMenu}>
             <Button variant="link" className="hover:cursor-pointer"><ArrowLeft /> Back to menu</Button>
           </div>
